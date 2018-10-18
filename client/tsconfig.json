@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "lib": ["es2015", "dom"],
+    "jsx": "react",
+    "declaration": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "outDir": "./dist/",
+    "strict": false,
+    "strictNullChecks": false,
+    "baseUrl": "src",
+    "paths": {
+      "@controllers/views/*": ["controllers/views/*"],
+      "@components/*": ["components/*"]
+    },
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "watch": true
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
+}
