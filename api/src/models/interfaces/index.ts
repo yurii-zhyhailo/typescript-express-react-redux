@@ -1,0 +1,1 @@
+export { UserAttributes } from './user';

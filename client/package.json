@@ -1,5 +1,5 @@
 {
-  "name": "typescript_app",
+  "name": "typescript-express-react-redux.client",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index",
