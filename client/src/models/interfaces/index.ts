@@ -1,1 +1,2 @@
-export { UserAttributes } from './user';
+export { IUser } from './user'
+export { IRole } from './role'

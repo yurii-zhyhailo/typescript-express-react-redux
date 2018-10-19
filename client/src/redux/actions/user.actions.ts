@@ -34,7 +34,7 @@ function logout(): {} {
     return { type : userConstants.LOGOUT };
 }
 
-function register(): void {
+function register(user: any): any {
     throw new Error('NotImplementedException');
 }
 

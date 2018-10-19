@@ -1,5 +1,5 @@
-import { UserAttributes } from './interfaces/';
+import { IUser } from './interfaces';
 
-class User {
+export class User {
     
 }
