@@ -1,2 +1,2 @@
-export { IUser } from './user'
-export { IRole } from './role'
+export { IUser } from './user';
+export { IRole } from './role';

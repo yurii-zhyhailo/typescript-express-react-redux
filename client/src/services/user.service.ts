@@ -1,12 +1,14 @@
 import { authHeader } from '../helpers';
+import { userConstants } from '../redux/constants';
 
 export const userService = {
     login,
     getAll,
-    logout
+    logout,
+    register
 }
 
-function login(username: string, password: string) {
+function login(username: string, password: string): Promise<void> {
     let requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -26,7 +28,7 @@ function login(username: string, password: string) {
         });
 }
 
-function getAll() {
+function getAll(): Promise<void> {
     let requestOptions = {
         method: 'GET',
         headers: authHeader()
@@ -39,6 +41,17 @@ function getAll() {
 function logout() {
     // remove a user from local storage to log user out
     localStorage.removeItem('user');
+    return { type: userConstants.LOGOUT }
+}
+
+function register(user: any): Promise<void> {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+    };
+
+    return fetch(`/users/register`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(responce: any): void {

@@ -1,5 +1,8 @@
 import { userConstants } from '../constants';
 import { userService } from '../../services';
+import { IUserState } from '../states';
+import { history } from '../../helpers';
+import { Dispatch, Action } from 'redux';
 
 export const userActions = {
     login,
@@ -9,12 +12,11 @@ export const userActions = {
     delete: _delete
 };
 
+function login(user: IUserState): any {
+    return (dispatch: Dispatch) => {
+        dispatch(request( user ));
 
-function login(username: string, password: string): any {
-    return (dispatch: any) => {
-        dispatch(request({ username }));
-
-        userService.login(username, password)
+        userService.login(user.username, user.password)
             .then(
                 (user: any) => {
                     dispatch(success(user));
@@ -25,9 +27,9 @@ function login(username: string, password: string): any {
             );
     }
 
-    function request(user: any): {}  { return { type: userConstants.LOGIN_REQUEST, user} }
-    function success(user: any): {} { return { type: userConstants.LOGIN_SUCCESS, user} }
-    function failure(error: any): {} { return { type: userConstants.LOGIN_FAILURE, error} }
+    function request(user: IUserState): any  { return { type: userConstants.LOGIN_REQUEST, user} }
+    function success(user: any): any { return { type: userConstants.LOGIN_SUCCESS, user} }
+    function failure(error: any): any { return { type: userConstants.LOGIN_FAILURE, error} }
 }
 
 function logout(): {} {
@@ -35,7 +37,24 @@ function logout(): {} {
 }
 
 function register(user: any): any {
-    throw new Error('NotImplementedException');
+    return (dispatch: any) => {
+        dispatch(request(user));
+
+        userService.register(user)
+            .then(
+                (user: any) => { 
+                    dispatch(success(user));
+                    history.push('/login');
+                },
+                error => {
+                    dispatch(failure(error));
+                }
+            );
+    };
+
+    function request(user: any) { return { type: userConstants.REGISTER_REQUEST, user } }
+    function success(user: any) { return { type: userConstants.REGISTER_SUCCESS, user } }
+    function failure(error: any) { return { type: userConstants.REGISTER_FAILURE, error } }
 }
 
 function getAll(): any {

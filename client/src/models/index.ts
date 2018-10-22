@@ -1,1 +1,1 @@
-export { IState } from './state';
+export { IState } from 'redux/states/state';
