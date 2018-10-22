@@ -1,16 +1,63 @@
-// Import everything from express and assign it to the express variable
-import * as express from 'express';
+//this will emulate a full ES2015+ environment
+//and is intended to be used in an application rather than a library/tool.
+require('babel-polyfill');
 
-// Create a new express application instance
-const app: express.Application = express();
-// The port the express app will listen on 
-const port: number =  parseInt(process.env.PORT || '8000');
+//this will load all env variables for dev and test mode
+if(process.env.NODE_ENV !== 'production'){
+  require('dotenv').config();
+}
 
-app.use(express.static('./dist'));
+//load http module
+import * as http from 'http';
+import app from './app';
 
-// Serve the application at the given port
-app.listen(port, () => {
-    // Success callback
-    console.log(`Listening at http://localhost:${port}`);
+import * as iconvLite from 'iconv-lite';
+//used for characted encoding conversion
+iconvLite.encodingExists('foo');
+
+//signal events are emitted when the Node.js process receives a signal
+//SIGINT signal is with -C in most terminal programs
+process.on('SIGINT', () => {
+  process.exit(0);
 });
 
+//this is when testing with jest - its set up
+//process.env.NODE_ENV to be test
+//in this case we will choose test port accordingly
+const IS_TEST: boolean = process.env.NODE_ENV === 'test';
+
+//we will replace those port number later on with env vars
+const port: number = IS_TEST ? 3001 : 3000;
+
+//create a server
+const server: http.Server = new http.Server(app);
+
+//listen on the provided port
+server.listen(port, () => {
+  if(! IS_TEST){
+    console.log(`Listening at http://localhost:${port}/api/v1`);
+  }
+});
+
+//server error handler
+server.on('error', (error: any, port: number) => {
+  if (error.syscall !== "listen") {
+    throw error;
+  }
+  switch (error.code) {
+    case 'EACCES':
+      if(process.env.NODE_ENV !== 'test'){
+        console.log(`${port} requires elevated privileges`);
+      }
+      process.exit(1);
+    case 'EADDRINUSE':
+      if(process.env.NODE_ENV !== 'test'){
+        console.log(`${port} is already in use`);
+      }
+      process.exit(1);
+    default:
+      throw error;
+  }
+});
+
+export default server;
