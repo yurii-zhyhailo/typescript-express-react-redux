@@ -4,72 +4,55 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Dispatch, Action } from 'redux';
 import { connect } from 'react-redux';
 
-import { userActions } from '../../redux/actions';
+import { register } from '../../redux/actions';
 
 import { IState } from '../../models';
 
 type MapStateToProps = ReturnType<typeof mapStateToProps>;
 type MapDispatchToProps = ReturnType<typeof mapDispatchToProps>;
-
 interface IRegisterOwnProps extends RouteComponentProps<undefined> {};
-
-// use union instead of interface extending
-type IRegisterProps = MapStateToProps | MapDispatchToProps | IRegisterOwnProps;
+type IRegisterProps = MapStateToProps & MapDispatchToProps & IRegisterOwnProps;
 
 const mapStateToProps = (state: IState, ownProps: IRegisterOwnProps) => ({
-
+    user: state.registration.user,
+    isRegistering: state.registration.isRegistering
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>, ownProps: IRegisterOwnProps) => ({
-    handleSubmit: () => {
-
+    register: () => {
+        return dispatch(register() as any);
     }
-}); 
+});
 
-export class RegisterPage extends React.Component<any, any> {
+interface State {
+    internalComponentState: any
+}
+
+export class RegisterPage extends React.Component<IRegisterProps/*, State*/> {
 
     constructor(props: IRegisterProps) {
         super(props);
-
-        this.state = {
-            user: {
-                firstName: '',
-                lastName: '',
-                userName: '',
-                password: ''
-            },
-            submitted: false
-        }
-
     }
 
     handleChange(event: React.SyntheticEvent): void {
         let target = event.target as HTMLInputElement;
         let { name, value } = target;
-        let { user } = this.state;
-
-        this.setState({
-            user: {
-                ...user,
-                [name]: value
-            }
-        });
     }
 
     handleSubmit(event: React.SyntheticEvent): void {
         event.preventDefault();
+        let { user } = this.props;
 
-        this.setState({ submitted: true });
-        let { user } = this.state;
-        let { dispatch } = this.props;
-        if (user.firstName && user.lastName && user.username && user.password) {
-           // dispatch(userActions.register(user));
+        if (user.first_name && user.last_name && user.username && user.password) {
+            this.props.register();
         }
     }
 
     render() {
         return(
-            <h2>Register Component</h2>
+            <div className="col-md-6 col-md-offset-3">
+            <h2>Register</h2>
+        </div>
         )
     }
 }
