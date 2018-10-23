@@ -3,14 +3,14 @@ import { RoleInstance } from './role';
 
 export interface UserAttributes {
     id: number;
-    firstname: string;
-    lastname: string;
+    firstName: string;
+    lastName: string;
     bio: string;
     email: string;
     password: string;
-    created_at: string;
-    updated_at: string;
-    deleted_at: string;
+    createdAt: string;
+    updatedAt: string;
+    deletedAt: string;
 }
 
 export interface UserInstance extends Instance<UserAttributes> {
