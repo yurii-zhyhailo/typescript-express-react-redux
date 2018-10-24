@@ -4,9 +4,9 @@ export interface RoleAttributes {
     id: string;
     name: string,
     description: string,
-    created_at: string,
-    updated_at: string,
-    deleted_at: string
+    createdAt: string,
+    updatedAt: string,
+    deletedAt: string
 }
 
 export interface RoleInstance extends Instance<RoleAttributes> {
