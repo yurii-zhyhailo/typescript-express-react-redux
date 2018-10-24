@@ -1,12 +1,21 @@
 import { userConstants } from '../constants';
-import { IRegistationState } from '../states';
+import { IRegisterState, IUserState } from '../states';
 
-const initialRegistrationState = (): IRegistationState => ({
-  user: undefined,
+const initialRegistrationState = (): IRegisterState => {
+let user = {
+  firstName: 'me',
+  lastName: 'me',
+  username: 'me',
+  password: 'hash'
+} as IUserState;
+
+return { 
+  user: user,
   isRegistering: false
-}); 
+}
+}; 
 
-export function registration(state = initialRegistrationState(), action: any): IRegistationState {
+function register(state = initialRegistrationState(), action: any): IRegisterState {
   switch (action.type) {
     case userConstants.REGISTER_REQUEST:
       return {
@@ -27,3 +36,5 @@ export function registration(state = initialRegistrationState(), action: any): I
       return state
   }
 }
+
+export { register }

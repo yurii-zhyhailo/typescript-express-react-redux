@@ -1,7 +1,7 @@
 import { IUserState } from './user.state';
-import { IRegistationState } from './registration.state';
+import { IRegisterState } from './register.state';
  
 export interface IState {
     user: IUserState,
-    registration: IRegistationState
+    register: IRegisterState
 }

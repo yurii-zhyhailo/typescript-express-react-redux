@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { userActions } from '../../redux/actions';
+import { IUserState } from '../../redux/states';
 
 class LoginPage extends React.Component<any, any> {
     constructor(props: any){
@@ -36,7 +37,10 @@ class LoginPage extends React.Component<any, any> {
         let { dispatch } = this.props;
 
         if (username && password) {
-            dispatch(userActions.login(username, password));
+            dispatch(userActions.login({
+                username: username,
+                password: password
+            } as IUserState));
         }
     }
 

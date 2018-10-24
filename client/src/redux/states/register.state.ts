@@ -1,7 +1,6 @@
-import { IUserState } from './user.state';
 import { IUser } from '../../models/interfaces';
 
-export interface IRegistationState {
+export interface IRegisterState {
     user: IUser,
     isRegistering: boolean
 }
