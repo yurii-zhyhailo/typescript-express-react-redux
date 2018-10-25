@@ -1,5 +1,5 @@
 import { authHeader } from '../helpers';
-import { userConstants } from '../redux/constants';
+import { userConstants } from '../constants';
 
 export const userService = {
     login,

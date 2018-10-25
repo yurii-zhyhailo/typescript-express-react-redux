@@ -1,1 +1,0 @@
-export { IState } from 'redux/states/state';

@@ -1,7 +1,7 @@
 import { userConstants } from '../constants';
-import { userService } from '../../services';
-import { IUserState } from '../states';
-import { history } from '../../helpers';
+import { userService } from '../services';
+import { IUserStoreState } from '../store';
+import { history } from '../helpers';
 import { Dispatch, Action } from 'redux';
 
 export const userActions = {
@@ -12,7 +12,7 @@ export const userActions = {
     delete: _delete
 };
 
-function login(user: IUserState): any {
+function login(user: IUserStoreState): any {
     return (dispatch: Dispatch) => {
         dispatch(request( user ));
 
@@ -27,7 +27,7 @@ function login(user: IUserState): any {
             );
     }
 
-    function request(user: IUserState): any  { return { type: userConstants.LOGIN_REQUEST, user} }
+    function request(user: IUserStoreState): any  { return { type: userConstants.LOGIN_REQUEST, user} }
     function success(user: any): any { return { type: userConstants.LOGIN_SUCCESS, user} }
     function failure(error: any): any { return { type: userConstants.LOGIN_FAILURE, error} }
 }

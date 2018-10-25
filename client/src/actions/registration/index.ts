@@ -1,18 +1,18 @@
 import { Dispatch } from 'redux';
-import { IState } from '../../states';
 
 import { ActionTypeKeys } from "../ActionTypeKeys"
 import {IRegisterFailAction,
     IRegisterInProgressAction,
-    IRegisterSuccess} from './register.action';
+    IRegisterSuccessAction} from './register.action';
 
-import { IUserState } from '../../states';
+import { IUser } from '../../models/interfaces';
 
-import { userService } from '../../../services';
+import { userService } from '../../services';
+import IStoreState from '../../store/IStoreState';
 
 
 export function register(
-    user: IUserState
+    user: IUser
   ): (dispatch: Dispatch<any>) => Promise<void> {
     return async (dispatch: Dispatch<any>) => {
       // User registration in progress
@@ -34,7 +34,7 @@ function registerInProgress(): IRegisterInProgressAction {
     };
 }
 
-function registerSuccess(user: IUserState): IRegisterSuccess {
+function registerSuccess(user: IUser): IRegisterSuccessAction {
     return {
       payload: {
         user
@@ -51,3 +51,5 @@ function registerFail(error: Error): IRegisterFailAction {
       type: ActionTypeKeys.REGISTER_FAIL
     };
 }
+
+export { IRegisterFailAction, IRegisterInProgressAction, IRegisterSuccessAction}

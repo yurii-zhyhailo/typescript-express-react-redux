@@ -1,13 +1,13 @@
-import { IUser } from '../../models/interfaces';
+import { IUser } from '../models/interfaces';
 
-export interface IRegisterState {
+export interface IRegisterStoreState {
     payload: {
        user: IUser
     },
-    isRegistering: boolean
+    isFetching: boolean
 }
 
-export const registerInitialState: IRegisterState = {
+export const registerInitialState: IRegisterStoreState = {
     payload: {
         user: {
             firstName: '',
@@ -15,5 +15,5 @@ export const registerInitialState: IRegisterState = {
             username: '',
             password: ''
         } as IUser},
-    isRegistering: false
+    isFetching: false
 }

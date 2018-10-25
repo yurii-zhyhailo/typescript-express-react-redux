@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { userActions } from '../../redux/actions';
-import { IUserState } from '../../redux/states';
+import { userActions } from '../../actions';
+import { IUserStoreState } from '../../store';
 
 class LoginPage extends React.Component<any, any> {
     constructor(props: any){
@@ -40,7 +40,7 @@ class LoginPage extends React.Component<any, any> {
             dispatch(userActions.login({
                 username: username,
                 password: password
-            } as IUserState));
+            } as IUserStoreState));
         }
     }
 

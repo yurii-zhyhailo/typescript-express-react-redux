@@ -1,4 +1,4 @@
-import { IUser } from '../../../models/interfaces'
+import { IUser } from '../../models/interfaces'
 import { ActionTypeKeys } from '../ActionTypeKeys'
 
 export interface IRegisterFailAction {
@@ -12,7 +12,7 @@ export interface IRegisterInProgressAction {
   readonly type: ActionTypeKeys.REGISTER_INPROGRESS
 }
 
-export interface IRegisterSuccess {
+export interface IRegisterSuccessAction {
   readonly type: ActionTypeKeys.REGISTER_SUCCESS;
   readonly payload: {
     readonly user: IUser

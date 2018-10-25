@@ -4,9 +4,9 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Dispatch, Action } from 'redux';
 import { connect } from 'react-redux';
 
-import { userActions } from '../../redux/actions';
+import { userActions } from '../../actions';
 
-import { IState } from '../../models';
+import IStoreState from '../../store/IStoreState'
 
 type MapStateToProps = ReturnType<typeof mapStateToProps>;
 type MapDispatchToProps = ReturnType<typeof mapDispatchToProps>;
@@ -15,7 +15,7 @@ interface IRegisterOwnProps extends RouteComponentProps<undefined> {
 };
 type IRegisterProps = MapStateToProps & MapDispatchToProps & IRegisterOwnProps;
 
-const mapStateToProps = (state: IState, ownProps: IRegisterOwnProps) => {
+const mapStateToProps = (state: IStoreState, ownProps: IRegisterOwnProps) => {
     let { register } = state;
     return {
         payload: {
@@ -116,7 +116,7 @@ class RegisterPage extends React.Component<IRegisterProps> {
     }
 }
 
-const connectedRegisterPage = connect<MapStateToProps, MapDispatchToProps, IRegisterOwnProps, IState>(
+const connectedRegisterPage = connect<MapStateToProps, MapDispatchToProps, IRegisterOwnProps, IStoreState>(
     mapStateToProps,
     mapDispatchToProps
 )(RegisterPage);

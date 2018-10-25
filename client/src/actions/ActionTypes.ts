@@ -1,12 +1,12 @@
 
 import {IRegisterFailAction,
         IRegisterInProgressAction,
-        IRegisterSuccess} from './registration/register.action'
+        IRegisterSuccessAction} from './registration/register.action'
 
 type ActionTypes = 
     | IRegisterFailAction
     | IRegisterInProgressAction
-    | IRegisterSuccess
+    | IRegisterSuccessAction
 ;
 
 export default ActionTypes;
