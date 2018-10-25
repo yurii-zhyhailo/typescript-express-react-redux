@@ -18,7 +18,9 @@ type IRegisterProps = MapStateToProps & MapDispatchToProps & IRegisterOwnProps;
 const mapStateToProps = (state: IState, ownProps: IRegisterOwnProps) => {
     let { register } = state;
     return {
-        user: register.user,
+        payload: {
+            user: register.payload.user
+        },
         isRegistering: register.isRegistering
     }
 };
@@ -59,7 +61,7 @@ class RegisterPage extends React.Component<IRegisterProps> {
 
         this.setState({ submitted: true });
 
-        const { user } = this.props;
+        const { user } = this.props.payload;
         if (user.firstName && user.lastName && user.username && user.password) {
             this.props.register();
         }
@@ -67,7 +69,7 @@ class RegisterPage extends React.Component<IRegisterProps> {
 
     render() {
         let { isRegistering } = this.props;
-        let {  user } = this.props;
+        let {  user } = this.props.payload;
         let submitted = false;
         return(
             <div className="col-md-6 col-md-offset-3">

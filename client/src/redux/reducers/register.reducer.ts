@@ -1,21 +1,7 @@
 import { userConstants } from '../constants';
-import { IRegisterState, IUserState } from '../states';
+import { IRegisterState, registerInitialState, IUserState } from '../states';
 
-const initialRegistrationState = (): IRegisterState => {
-let user = {
-  firstName: 'me',
-  lastName: 'me',
-  username: 'me',
-  password: 'hash'
-} as IUserState;
-
-return { 
-  user: user,
-  isRegistering: false
-}
-}; 
-
-function register(state = initialRegistrationState(), action: any): IRegisterState {
+function register(state = registerInitialState, action: any): IRegisterState {
   switch (action.type) {
     case userConstants.REGISTER_REQUEST:
       return {
