@@ -1,9 +1,9 @@
-import * as React from "react"
-import {Redirect, Route, RouteComponentProps, RouteProps} from "react-router-dom"
+import * as React from "react";
+import { Redirect, Route, RouteComponentProps, RouteProps } from "react-router-dom";
 
-type RouteComponent = React.StatelessComponent<RouteComponentProps<{}>> | React.ComponentClass<any>
+type RouteComponent = React.StatelessComponent<RouteComponentProps<{}>> | React.ComponentClass<any>;
 
-const AUTHENTICATED = false // TODO: implement authentication logic
+const AUTHENTICATED = false; // TODO: implement authentication logic
 
 export const PrivateRoute: React.StatelessComponent<RouteProps> = ({component, ...rest}) => {
   const renderFn = (Component?: RouteComponent) => (props: RouteProps) => {

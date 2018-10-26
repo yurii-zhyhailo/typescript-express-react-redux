@@ -1,7 +1,11 @@
-// array in local storage for registered users
-let users = JSON.parse(localStorage.getItem('users')) || [];
+import { IUser } from '../models/interfaces';
+
+// let users: Array<IUser> = [];
     
 export function configureFakeBackend() {
+    // array in local storage for registered users
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+
     let realFetch = window.fetch;
     window.fetch = function (url: any, opts: any) {
         return new Promise((resolve: any, reject: any) => {
@@ -14,7 +18,7 @@ export function configureFakeBackend() {
                     let params = JSON.parse(opts.body);
 
                     // find if any user matches login credentials
-                    let filteredUsers = users.filter( (user: any) => {
+                    let filteredUsers = users.filter( (user: IUser) => {
                         return user.username === params.username && user.password === params.password;
                     });
 
@@ -22,7 +26,6 @@ export function configureFakeBackend() {
                         // if login details are valid return user details and fake jwt token
                         let user = filteredUsers[0];
                         let responseJson = {
-                            id: user.id,
                             username: user.username,
                             firstName: user.firstName,
                             lastName: user.lastName,
@@ -102,7 +105,8 @@ export function configureFakeBackend() {
                         let id = parseInt(urlParts[urlParts.length - 1]);
                         for (let i = 0; i < users.length; i++) {
                             let user = users[i];
-                            if (user.id === id) {
+                            // TODO: Implement a user saving in local
+                            if (id === id) {
                                 // delete user
                                 users.splice(i, 1);
                                 localStorage.setItem('users', JSON.stringify(users));

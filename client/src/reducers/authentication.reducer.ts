@@ -42,7 +42,7 @@ export default function authentication(
             case ActionTypeKeys.LOGIN_INPROGRESS:
                 return onLoginInProgress(state);
             default:
-                state
+                return state;
         }
 }
 

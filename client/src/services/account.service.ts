@@ -1,5 +1,4 @@
-
-import { IDictionary } from '../CustomInterfaces';
+import { IDictionary } from '../helpers/custom-interfaces';
 
 export interface IServiceRoute {
     methods: string[],

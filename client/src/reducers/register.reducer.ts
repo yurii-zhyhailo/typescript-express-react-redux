@@ -16,7 +16,7 @@ export default function register(
         case ActionTypeKeys.REGISTER_INPROGRESS:
           return onRegisterInProgress(state);
         default:
-          return state
+          return state;
       }
 }
 

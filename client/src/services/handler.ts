@@ -1,7 +1,7 @@
 import axios, 
     { AxiosResponse,
     AxiosPromise } from 'axios';
-import { IDictionary, LooseObject } from '../CustomInterfaces'
+import { IDictionary, LooseObject } from '../helpers/custom-interfaces';
 
 export interface DataServiceResponse<T = any> extends AxiosResponse<T> {
     data: T;

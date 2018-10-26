@@ -1,4 +1,4 @@
-import { IDictionary} from '../CustomInterfaces';
+import { IDictionary} from '../helpers/custom-interfaces';
 
 interface IService {
     getBaseUrl(): any;
