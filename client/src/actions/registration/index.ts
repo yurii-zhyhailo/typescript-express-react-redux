@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 
 import { ActionTypeKeys } from "../ActionTypeKeys"
-import {IRegisterFailAction,
+import {IRegisterFailureAction,
     IRegisterInProgressAction,
     IRegisterSuccessAction} from './register.action';
 
@@ -23,7 +23,7 @@ export function register(
   
         dispatch(registerSuccess(user));
       } catch (err) {
-        dispatch(registerFail(err));
+        dispatch(registerFailure(err));
       }
     };
 }
@@ -43,13 +43,13 @@ function registerSuccess(user: IUser): IRegisterSuccessAction {
     };
 }
 
-function registerFail(error: Error): IRegisterFailAction {
+function registerFailure(error: Error): IRegisterFailureAction {
     return {
       payload: {
         error
       },
-      type: ActionTypeKeys.REGISTER_FAIL
+      type: ActionTypeKeys.REGISTER_FAILURE
     };
 }
 
-export { IRegisterFailAction, IRegisterInProgressAction, IRegisterSuccessAction}
+export { IRegisterFailureAction, IRegisterInProgressAction, IRegisterSuccessAction}

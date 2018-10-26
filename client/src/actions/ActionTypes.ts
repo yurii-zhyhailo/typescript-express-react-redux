@@ -1,12 +1,18 @@
 
-import {IRegisterFailAction,
-        IRegisterInProgressAction,
-        IRegisterSuccessAction} from './registration/register.action'
+import { IRegisterFailureAction,
+         IRegisterInProgressAction,
+         IRegisterSuccessAction } from './registration/register.action'
+import { ILoginFailureAction,
+         ILoginInProgressAction,
+         ILoginSuccessAction } from './authentication'
 
 type ActionTypes = 
-    | IRegisterFailAction
+    | IRegisterFailureAction
     | IRegisterInProgressAction
     | IRegisterSuccessAction
+    | ILoginFailureAction
+    | ILoginInProgressAction
+    | ILoginSuccessAction
 ;
 
 export default ActionTypes;

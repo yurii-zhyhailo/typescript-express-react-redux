@@ -19,9 +19,9 @@ const mapStateToProps = (state: IStoreState, ownProps: IRegisterOwnProps) => {
     let { register } = state;
     return {
         payload: {
-            user: register.payload.user
+            user: register.user
         },
-        isRegistering: register.isRegistering
+        isRegistering: register.isFetching
     }
 };
 

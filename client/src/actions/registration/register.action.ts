@@ -1,8 +1,8 @@
-import { IUser } from '../../models/interfaces'
-import { ActionTypeKeys } from '../ActionTypeKeys'
+import { IUser } from '../../models/interfaces';
+import { ActionTypeKeys } from '../ActionTypeKeys';
 
-export interface IRegisterFailAction {
-    readonly type: ActionTypeKeys.REGISTER_FAIL;
+export interface IRegisterFailureAction {
+    readonly type: ActionTypeKeys.REGISTER_FAILURE;
     readonly payload: {
       readonly error: Error
     }
