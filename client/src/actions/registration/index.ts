@@ -11,7 +11,7 @@ import { userService } from '../../services';
 import IStoreState from '../../store/IStoreState';
 
 
-export function register(
+export function register (
     user: IUser
   ): (dispatch: Dispatch<any>) => Promise<void> {
     return async (dispatch: Dispatch<any>) => {
