@@ -10,7 +10,8 @@ export const registerInitialState: IRegisterStoreState = {
         firstName: '',
         lastName: '',
         username: '',
-        password: ''
+        password: '',
+        email: ''
     } as IUser,
     isFetching: false
 }

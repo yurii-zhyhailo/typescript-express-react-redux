@@ -11,7 +11,7 @@ import { userService } from '../../services';
 import IStoreState from '../../store/IStoreState';
 
 
-export function register (
+export function registerUser (
     user: IUser
   ): (dispatch: Dispatch<any>) => Promise<void> {
     return async (dispatch: Dispatch<any>) => {
@@ -22,8 +22,9 @@ export function register (
         await userService.register(user);
   
         dispatch(registerSuccess(user));
-      } catch (err) {
-        dispatch(registerFailure(err));
+
+      } catch (error) {
+        dispatch(registerFailure(error));
       }
     };
 }

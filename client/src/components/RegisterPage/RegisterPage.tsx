@@ -1,29 +1,25 @@
 import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
-import { Dispatch, Action, bindActionCreators } from 'redux';
+import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
-import { userActions } from '../../actions';
 
 import IStoreState from '../../store/IStoreState';
 import { IUserStoreState } from '../../store';
 
-import { register as registerAction } from '../../actions/registration';
+import { registerUser as registerUserAction } from '../../actions/registration';
 import { IUser } from '../../models/interfaces';
 
-interface IRegisterOwnProps extends RouteComponentProps<undefined> {
-    dispatch: Dispatch
-};
+interface IRegisterOwnProps extends RouteComponentProps<undefined> {};
 
 interface IRegisterPageProps extends RouteComponentProps<any> {
-    register: (user: IUser) => (dispatch: Dispatch<any>) => Promise<void>;
+    registerUser: (user: IUser) => (dispatch: Dispatch<any>) => Promise<void>;
 }
 
 interface IRegisterPageState {
-    readonly actionOnProgress: boolean;
+    readonly actionInProgress: boolean;
     readonly submitted: boolean;
-    readonly userState: IUserStoreState;
+    readonly user: IUserStoreState;
 }
 
 class RegisterPage extends React.Component<IRegisterPageProps, IRegisterPageState> {
@@ -31,9 +27,9 @@ class RegisterPage extends React.Component<IRegisterPageProps, IRegisterPageStat
         super(props);
 
         this.state = {
-            actionOnProgress: false,
+            actionInProgress: false,
             submitted: false,
-            userState: {
+            user: {
                 firstName: '',
                 lastName: '',
                 username: '',
@@ -47,7 +43,7 @@ class RegisterPage extends React.Component<IRegisterPageProps, IRegisterPageStat
     }
 
     render() {
-        let { user } = this.props.payload;
+        let { user, actionInProgress } = this.state;
         let submitted = false;
         return(
             <div className="col-md-6 col-md-offset-3">
@@ -83,7 +79,7 @@ class RegisterPage extends React.Component<IRegisterPageProps, IRegisterPageStat
                     </div>
                     <div className="form-group">
                         <button className="btn btn-primary">Register</button>
-                        {isRegistering && 
+                        {actionInProgress && 
                             <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                         }
                         <Link to="/login" className="btn btn-link">Cancel</Link>
@@ -94,38 +90,51 @@ class RegisterPage extends React.Component<IRegisterPageProps, IRegisterPageStat
     }
 
     private handleValueChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
-        let target = event.target as HTMLInputElement;
-        let { name, value } = target;
-    
+        const propertyName = e.target.id;
+        const updatedValue = e.target.value;
+
+        const updatedUser = {
+        ...this.state.user,
+        [propertyName]: updatedValue
+        };
+
+        this.setState({
+            user: updatedUser
+        });
     }
     
-    private handleSubmit( e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+    private handleSubmit() {
         event.preventDefault();
     
-        this.setState({ submitted: true });
+        this.setState({
+            submitted: true,
+            actionInProgress: true 
+        });
     
-        const { user } = this.props.payload;
+        const { user } = this.state;
         if (user.firstName && user.lastName && user.username && user.password) {
-            this.props.register();
+            this.registerUser(user);
         }
+
+        this.setState({
+            actionInProgress: false 
+        });
+    }
+
+    private async registerUser(user: IUser) {
+        await this.props.registerUser(user);
     }
 }
 
-const mapStateToProps = (state: IStoreState, ownProps: IRegisterOwnProps) => {
-    let { register } = state;
-    return {
-        payload: {
-            user: register.user
-        },
-        isRegistering: register.isFetching
-    }
+function mapStateToProps(state: IStoreState, ownProps: IRegisterOwnProps) {
+    return {};
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<Action>, ownProps: IRegisterOwnProps) => ({
-    register: () => {
-      return dispatch(userActions.register({}) as any);
-    }
-});
+function mapDispatchToProps(dispatch: Dispatch<any>, ownProps: IRegisterOwnProps) {
+    return {
+        registerUser: bindActionCreators(registerUserAction, dispatch)
+    };
+};
 
 const connectedRegisterPage = connect(
     mapStateToProps,
