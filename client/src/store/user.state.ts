@@ -1,7 +1,6 @@
 import { IUser } from '../models/interfaces';
 
-export interface IUserStoreState extends IUser {
-}
+export interface IUserStoreState extends IUser {}
 
 export const userInitialState: IUserStoreState = {
     id: '',
@@ -11,5 +10,3 @@ export const userInitialState: IUserStoreState = {
     email: '',
     password: ''
 }
-
-
