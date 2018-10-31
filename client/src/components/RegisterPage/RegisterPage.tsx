@@ -1,25 +1,24 @@
 import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
-import { Dispatch, bindActionCreators } from 'redux';
+import { Dispatch, Action, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import IStoreState from '../../store/IStoreState';
-import { IUserStoreState } from '../../store';
 
 import { registerUser as registerUserAction } from '../../actions/registration';
 import { IUser } from '../../models/interfaces';
-
-interface IRegisterOwnProps extends RouteComponentProps<undefined> {};
+import UserViewModel from '../../models/user.model';
 
 interface IRegisterPageProps extends RouteComponentProps<any> {
-    registerUser: (user: IUser) => (dispatch: Dispatch<any>) => Promise<void>;
+    readonly viewModel: UserViewModel,
+    register: (user: IUser) => (dispatch: Dispatch<any>) => Promise<void>;
 }
 
 interface IRegisterPageState {
     readonly actionInProgress: boolean;
     readonly submitted: boolean;
-    readonly user: IUserStoreState;
+    readonly viewModel: UserViewModel;
 }
 
 class RegisterPage extends React.Component<IRegisterPageProps, IRegisterPageState> {
@@ -29,13 +28,7 @@ class RegisterPage extends React.Component<IRegisterPageProps, IRegisterPageStat
         this.state = {
             actionInProgress: false,
             submitted: false,
-            user: {
-                firstName: '',
-                lastName: '',
-                username: '',
-                password: '',
-                email: ''
-            }
+            viewModel: this.props.viewModel
         };
 
         this.handleValueChange = this.handleValueChange.bind(this);
@@ -43,7 +36,8 @@ class RegisterPage extends React.Component<IRegisterPageProps, IRegisterPageStat
     }
 
     render() {
-        let { user, actionInProgress } = this.state;
+        let { actionInProgress } = this.state;
+        let user = this.state.viewModel;
         let submitted = false;
         return(
             <div className="col-md-6 col-md-offset-3">
@@ -89,21 +83,21 @@ class RegisterPage extends React.Component<IRegisterPageProps, IRegisterPageStat
         )
     }
 
-    private handleValueChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
-        const propertyName = e.target.id;
-        const updatedValue = e.target.value;
+    private handleValueChange(event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+        const propertyName = event.target.name;
+        const updatedValue = event.target.value;
 
         const updatedUser = {
-        ...this.state.user,
+        ...this.state.viewModel,
         [propertyName]: updatedValue
         };
 
         this.setState({
-            user: updatedUser
+            viewModel: updatedUser
         });
     }
     
-    private handleSubmit() {
+    private handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault();
     
         this.setState({
@@ -111,9 +105,9 @@ class RegisterPage extends React.Component<IRegisterPageProps, IRegisterPageStat
             actionInProgress: true 
         });
     
-        const { user } = this.state;
-        if (user.firstName && user.lastName && user.username && user.password) {
-            this.registerUser(user);
+        const { viewModel } = this.state;
+        if (viewModel.firstName && viewModel.lastName && viewModel.username && viewModel.password) {
+            this.registerUser(viewModel);
         }
 
         this.setState({
@@ -122,17 +116,20 @@ class RegisterPage extends React.Component<IRegisterPageProps, IRegisterPageStat
     }
 
     private async registerUser(user: IUser) {
-        await this.props.registerUser(user);
+        await this.props.register(user);
     }
 }
 
-function mapStateToProps(state: IStoreState, ownProps: IRegisterOwnProps) {
-    return {};
+function mapStateToProps(state: IStoreState, ownProps: RouteComponentProps<any>) {
+    let userViewModel = new UserViewModel();
+    return {
+        viewModel: userViewModel
+    };
 };
 
-function mapDispatchToProps(dispatch: Dispatch<any>, ownProps: IRegisterOwnProps) {
+function mapDispatchToProps(dispatch: Dispatch<Action>) {
     return {
-        registerUser: bindActionCreators(registerUserAction, dispatch)
+        register: bindActionCreators(registerUserAction, dispatch)
     };
 };
 

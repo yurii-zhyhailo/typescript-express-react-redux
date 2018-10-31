@@ -4,11 +4,11 @@ import authentication from './authentication.reducer';
 import register from './register.reducer';
 
 import IStoreState from '../store/IStoreState';
-import { IRegisterStoreState, IUserStoreState } from '../store';
+import { IUserStoreState } from '../store';
 
-let rootReducer = combineReducers<any>({
-    register: register as Reducer<IRegisterStoreState>,
-    authentication: authentication as Reducer<IUserStoreState>
+const rootReducer = combineReducers<any>({
+    register: register,
+    authentication: authentication
 });
 
 export default rootReducer;

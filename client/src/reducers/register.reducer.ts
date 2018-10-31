@@ -1,11 +1,11 @@
-import { IRegisterStoreState, registerInitialState } from '../store';
+import { IUserStoreState, userInitialState } from '../store';
 
 import { IRegisterSuccessAction } from '../actions/registration';
 import { ActionTypeKeys } from '../actions/ActionTypeKeys';
 import ActionTypes from '../actions/ActionTypes';
 
 export default function register(
-    state: IRegisterStoreState = registerInitialState,
+    state: IUserStoreState = userInitialState,
     action: ActionTypes
   ) {
       switch (action.type) {
@@ -20,29 +20,26 @@ export default function register(
       }
 }
 
-function onRegisterInProgress(currentState: IRegisterStoreState) {
+function onRegisterInProgress(currentState: IUserStoreState) {
     return {
-      ...currentState,
-      isFetching: true
+      ...currentState
     };
 }
 
 function onRegisterSuccess(
     action: IRegisterSuccessAction,
-    currentState: IRegisterStoreState
+    currentState: IUserStoreState
 ) {
     return {
       ...currentState,
-      user: action.payload.user,
-      isFetching: false
+      user: action.payload.user
     };
 }
 
 function onRegisterFailure(
-    currentState: IRegisterStoreState
+    currentState: IUserStoreState
 ) {
     return {
-      ...currentState,
-      isFetching: false
+      ...currentState
     };
 }
