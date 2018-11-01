@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RouteComponentProps, Router, Route } from 'react-router-dom';
+import { RouteComponentProps, Router, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { history } from '../helpers';
@@ -8,8 +8,12 @@ import { LoginPage } from '../components/LoginPage';
 import { HomePage } from '../components/HomePage';
 import { RegisterPage } from '../components/RegisterPage';
 
+import Routes from '../router/Routes';
+import IStoreState from 'store/IStoreState';
+import { Dispatch, Action } from 'redux';
+
 interface IAppProps extends RouteComponentProps<any> {
-    // readonly isAuthenticated: boolean;
+    readonly isAuthenticated: boolean;
 }
 
 class App extends React.Component<IAppProps> {
@@ -19,29 +23,43 @@ class App extends React.Component<IAppProps> {
 
     render() {
         return (
-            <div className='jumbotron'>
-                <div className='container'>
-                    <div className='col-sm-8 col-sm-offset-2'>
-                        <Router history={history}>
-                            <div>
-                                <PrivateRoute exact path='/' component={HomePage} />
-                                <Route path='/register' component={RegisterPage} />
-                                <Route path='/login' component={LoginPage} />
-                            </div>
-                        </Router>
+            <div>
+                
+                <div className='jumbotron'>
+                    <div className='container'>
+                        <div className='col-sm-8 col-sm-offset-2'>
+                            <Router history={history}>
+                                <div>
+                                    <PrivateRoute exact path='/' component={HomePage} />
+                                    <Route path='/register' component={RegisterPage} />
+                                    <Route path='/login' component={LoginPage} />
+                                </div>
+                            </Router>
+                        </div>
                     </div>
                 </div>
+
+                <div className="container-fluid">
+                    <Routes isAuthenticated={this.props.isAuthenticated} />
+                </div>
+
             </div>
         )
     }
 }
 
-function mapStateToProps(state: any) {
-    let { alert } = state;
+function mapStateToProps(state: IStoreState) {
     return {
-        alert
+        isAuthenticated: true
     }
 }
 
-let connectedApp = connect(mapStateToProps)(App);
-export { connectedApp as App};
+function mapDispatchToProps(dispatch: Dispatch<Action>) {
+    return {
+        signOut: () => {}
+    }
+}
+
+export default withRouter(
+    connect<{}, {}, IAppProps>(mapStateToProps, mapDispatchToProps)(App)
+) as React.ComponentClass<{}>;
