@@ -5,10 +5,10 @@ export interface IUserDTO {
 }
 
 export interface IUser {
-    id: string;
-    firstName: string,
-    lastName: string,
-    username: string,
-    password: string,
-    email: string
+    readonly id: string;
+    readonly firstName: string,
+    readonly lastName: string,
+    readonly username: string,
+    readonly password: string,
+    readonly email: string
 }
