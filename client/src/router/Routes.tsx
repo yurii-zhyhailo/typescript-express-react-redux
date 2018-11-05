@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Error404Page from '../components/errors/Error404Page';
 
 import { LoginPage } from '../components/LoginPage';
-import { RegisterPage } from '../components/RegisterPage';
+import { RegisterPage } from '../components/Register';
 import { HomePage } from '../components/HomePage';
 
 import AuthenticateRoute from './AuthenticateRoute';

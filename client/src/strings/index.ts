@@ -1,5 +1,6 @@
 export default {
-    signUpPage: {
+    registerPage: {
+      title: 'Register',
       firstNameLabel: 'First Name',
       firstNamePlaceholder: 'Enter a first name',
       lastNameLabel: 'Last Name',
@@ -7,7 +8,6 @@ export default {
       cancelButton: "Cancel",
       saveButton: "Save"
     },
-    
     signInPage: {},
     userViewModel: {
         nameIsNotEmptyMessage: "Name is required.",
@@ -21,6 +21,7 @@ export default {
         userNameMaxLengthMessage:
           "Email address must be shorter than or equal to $constraint1 characters.",
         emailAddressIsNotEmptyMessage:
-          "The email address is required."
+          "The email address is required.",
+        cancelButton: 'Cancel'
     }
 }

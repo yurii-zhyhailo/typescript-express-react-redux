@@ -1,5 +1,6 @@
 import { authHeader } from '../helpers';
-import { userConstants } from '../constants';
+import { IUser } from '../models/interfaces';
+import baseUrl from './baseUrl';
 
 export const userService = {
     login,
@@ -9,9 +10,14 @@ export const userService = {
 }
 
 function login(username: string, password: string): Promise<void> {
+    const requestUrl = `${baseUrl}users/authenticate`;
+
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+
     let requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify({ username, password })
     };
 
@@ -29,6 +35,8 @@ function login(username: string, password: string): Promise<void> {
 }
 
 function getAll(): Promise<void> {
+    const requestUrl = `${baseUrl}/users`;
+
     let requestOptions = {
         method: 'GET',
         headers: authHeader()
@@ -41,14 +49,18 @@ function getAll(): Promise<void> {
 function logout() {
     // remove a user from local storage to log user out
     localStorage.removeItem('user');
-    return { type: userConstants.LOGOUT }
 }
 
 function register(user: any): Promise<void> {
+    const requestUrl = `${baseUrl}/users/register`;
+
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
+        headers,
+        body: JSON.stringify(stripProperties(user))
     };
 
     return fetch(`/users/register`, requestOptions).then(handleResponse);
@@ -60,4 +72,17 @@ function handleResponse(responce: any): void {
 
         return data;
     });
+}
+
+// Using this to remove any other properties that happen to be on object so only
+// send ISite properties to server.
+function stripProperties({ id, firstName, lastName, username, password, email}: IUser): IUser {
+    return {
+      id,
+      firstName,
+      lastName,
+      username,
+      password,
+      email
+    };
 }

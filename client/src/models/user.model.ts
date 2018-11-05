@@ -18,32 +18,23 @@ export default class UserViewModel implements  IUserViewModel {
     @IsNotEmpty({
         message: strings.userViewModel.nameIsNotEmptyMessage
     })
-    @MaxLength(100, {
-        message: strings.userViewModel.nameMaxLengthMessage
-    })
     public lastName: string;
 
     @IsNotEmpty({
         message: strings.userViewModel.userNameIsNotEmptyMessage
-    })
-    @IsEmail(undefined, {
-        message: strings.userViewModel.userNameIsEmailMessage
-    })
-    @MaxLength(100, {
-        message: strings.userViewModel.userNameMaxLengthMessage
     })
     public username: string;
 
     @IsNotEmpty({
         message: strings.userViewModel.passwordIsNotEmptyMessage
     })
-    @MaxLength(100, {
-        message: strings.userViewModel.passwordMaxLengthMessage
-    })
     public password: string;
 
     @IsNotEmpty({
         message: strings.userViewModel.emailAddressIsNotEmptyMessage
+    })
+    @IsEmail(undefined, {
+        message: strings.userViewModel.userNameIsEmailMessage
     })
     public email: string;
 
