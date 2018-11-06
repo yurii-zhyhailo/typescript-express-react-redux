@@ -1,15 +1,13 @@
 import * as React from 'react';
-import IValidationErrors from '../../models/interfaces/IValidationErrors';
-import UserViewModel from '../../models/user.model';
 import Input from '../common/Input';
 import strings from '../../strings';
-import { nameOf } from '../../utilities';
+import { Link } from 'react-router-dom';
 
-interface IRegisterForm {
-    readonly user: UserViewModel;
-    readonly validationErrors: IValidationErrors;
+interface ILoginForm {
+    readonly username: string;
+    readonly password: string;
     readonly actionInProgress: boolean;
-    handleSaveClick: (
+    handleLoginClick: (
         event: React.SyntheticEvent
     ) => void;
     handleCancelClick: () => void;
@@ -18,33 +16,28 @@ interface IRegisterForm {
     ) => void;
 }
 
-export default function RegisterForm(props: IRegisterForm) {
-    const firstName = nameOf<UserViewModel>("firstName");
-    const lastName = nameOf<UserViewModel>("lastName");
-
+export default function LoginForm(props: ILoginForm) {
     return (
         <form name="form" noValidate={true}>
             <div className="form-row">
                 <Input
                     className="col-6"
-                    id={firstName}
-                    label={strings.registerPage.firstNameLabel}
+                    id="username"
+                    label={strings.loginPage.usernameLabel}
                     type="text"
-                    placeholder={strings.registerPage.firstNamePlaceholder}
-                    value={props.user.firstName}
+                    placeholder={strings.loginPage.usernamePlaceholder}
+                    value={props.username}
                     handleChange={props.handleValueChange}
-                    validationErrors={props.validationErrors[firstName]}
                 />
 
                 <Input
                     className="col-6"
-                    id={lastName}
-                    label={strings.registerPage.lastNameLabel}
+                    id="password"
+                    label={strings.loginPage.passwordLabel}
                     type="text"
-                    placeholder={strings.registerPage.lastNamePlaceholder}
-                    value={props.user.lastName}
+                    placeholder={strings.loginPage.passwordPlaceholder}
+                    value={props.password}
                     handleChange={props.handleValueChange}
-                    validationErrors={props.validationErrors[lastName]}
                 />
             </div>
 
@@ -60,11 +53,13 @@ export default function RegisterForm(props: IRegisterForm) {
                     disabled={props.actionInProgress}
                     type="submit"
                     className="btn btn-primary ml-1"
-                    onClick={props.handleSaveClick}
+                    onClick={props.handleLoginClick}
                 >
                     {strings.registerPage.saveButton}
                 </button>
             </div>
+
+            <Link to="/register" className="btn btn-link">Register</Link>
         </form>
-    );
+    )
 }

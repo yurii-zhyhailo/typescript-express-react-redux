@@ -23,7 +23,6 @@ interface IRegisterPageProps extends RouteComponentProps<any> {
 
 interface IRegisterPageState {
     readonly actionInProgress: boolean;
-    readonly submitted: boolean;
     readonly viewModel: UserViewModel;
     readonly validationErrors: IValidationErrors;
 }
@@ -34,7 +33,6 @@ class RegisterPage extends React.Component<IRegisterPageProps, IRegisterPageStat
 
         this.state = {
             actionInProgress: false,
-            submitted: false,
             viewModel: this.props.viewModel,
             validationErrors: {}
         };
@@ -81,7 +79,6 @@ class RegisterPage extends React.Component<IRegisterPageProps, IRegisterPageStat
         event.preventDefault();
 
         this.setState({
-            submitted: true,
             actionInProgress: true 
         });
 

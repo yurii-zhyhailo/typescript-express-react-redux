@@ -2,13 +2,21 @@ export default {
     registerPage: {
       title: 'Register',
       firstNameLabel: 'First Name',
-      firstNamePlaceholder: 'Enter a first name',
+      firstNamePlaceholder: 'Enter first name',
       lastNameLabel: 'Last Name',
-      lastNamePlaceholder: 'Enter a last name',
+      lastNamePlaceholder: 'Enter last name',
       cancelButton: "Cancel",
       saveButton: "Save"
     },
-    signInPage: {},
+    loginPage: {
+      title: 'Login',
+      usernameLabel: "Username or Email",
+      usernamePlaceholder: "Enter username",
+      passwordLabel: "Password",
+      passwordPlaceholder: "Enter password",
+      loginButton: "Log In",
+      cancelButton: "Cancel",
+    },
     userViewModel: {
         nameIsNotEmptyMessage: "Name is required.",
         nameMaxLengthMessage:
