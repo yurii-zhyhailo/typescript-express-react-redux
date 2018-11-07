@@ -19,7 +19,8 @@ gulp.task('default', ['watch'], () => {
         script: "dist/server.js",
         ext: 'js',
         env: {
-            PORT: 8000
+            PORT: 8000,
+            NODE_ENV=development
         },
         ignore: [
             './node_modules/**'

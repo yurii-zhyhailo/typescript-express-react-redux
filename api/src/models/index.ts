@@ -49,8 +49,8 @@ files.filter((file: any) => {
     _models[model.name] = model;
   });
 
-  _models.Role.belongsToMany(_models.User, { through: _models.UserRole, as: 'users', onDelete: 'CASCADE',individualHooks: true});
-  _models.User.belongsToMany(_models.Role, { through: _models.UserRole, as: 'roles', onDelete: 'CASCADE',individualHooks: true});
+  _models.Role.belongsToMany(_models.User, { through: _models.UserRole, as: 'users', onDelete: 'CASCADE', individualHooks: true});
+  _models.User.belongsToMany(_models.Role, { through: _models.UserRole, as: 'roles', onDelete: 'CASCADE', individualHooks: true});
 
   //we will export models and sequelize instance
 export const models: SequelizeModels = _models;

@@ -2,6 +2,8 @@
 //and is intended to be used in an application rather than a library/tool.
 require('babel-polyfill');
 
+import { sequelize } from './models';
+
 //this will load all env variables for dev and test mode
 if(process.env.NODE_ENV !== 'production'){
   require('dotenv').config();
@@ -31,6 +33,14 @@ const port: number = IS_TEST ? 3001 : 3000;
 
 //create a server
 const server: http.Server = new http.Server(app);
+
+async function dbInit() {
+    await sequelize.sync();
+}
+
+if (process.env.NODE_ENV !== 'test') {
+  dbInit();
+} 
 
 //listen on the provided port
 server.listen(port, () => {
