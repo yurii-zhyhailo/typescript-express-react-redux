@@ -1,6 +1,7 @@
 import { IUserStoreState, userInitialState } from '../store';
 
-import { IRegisterSuccessAction } from '../actions/registration';
+import {  IRegisterSuccessAction,
+          IRegisterFailureAction } from '../actions/register';
 import { ActionTypeKeys } from '../actions/ActionTypeKeys';
 import ActionTypes from '../actions/ActionTypes';
 
@@ -10,7 +11,7 @@ export default function register(
   ) {
       switch (action.type) {
         case ActionTypeKeys.REGISTER_FAILURE:
-          return onRegisterFailure(state);
+          return onRegisterFailure(action, state);
         case ActionTypeKeys.REGISTER_SUCCESS:
           return onRegisterSuccess(action, state);
         case ActionTypeKeys.REGISTER_INPROGRESS:
@@ -37,9 +38,11 @@ function onRegisterSuccess(
 }
 
 function onRegisterFailure(
+    action: IRegisterFailureAction,
     currentState: IUserStoreState
 ) {
     return {
-      ...currentState
+      ...currentState,
+      user: action.payload.error
     };
 }

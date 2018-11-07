@@ -6,7 +6,7 @@ import { history } from '../helpers';
 import { PrivateRoute } from '../router';
 import { LoginPage } from '../components/LoginPage';
 import { HomePage } from '../components/HomePage';
-import { RegisterPage } from '../components/RegisterPage';
+import { RegisterPage } from '../components/Register';
 
 import Routes from '../router/Routes';
 import IStoreState from 'store/IStoreState';
@@ -24,7 +24,6 @@ class App extends React.Component<IAppProps> {
     render() {
         return (
             <div>
-                
                 <div className='jumbotron'>
                     <div className='container'>
                         <div className='col-sm-8 col-sm-offset-2'>

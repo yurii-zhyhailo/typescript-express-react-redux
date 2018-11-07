@@ -5,19 +5,20 @@ import Input from '../common/Input';
 import strings from '../../strings';
 import { nameOf } from '../../utilities';
 
-interface ISignUpForm {
+interface IRegisterForm {
     readonly user: UserViewModel;
     readonly validationErrors: IValidationErrors;
     readonly actionInProgress: boolean;
     handleSaveClick: (
         event: React.SyntheticEvent
     ) => void;
+    handleCancelClick: () => void;
     handleValueChange: (
-      e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+        event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => void;
 }
 
-export default function SignUpForm(props: ISignUpForm) {
+export default function RegisterForm(props: IRegisterForm) {
     const firstName = nameOf<UserViewModel>("firstName");
     const lastName = nameOf<UserViewModel>("lastName");
 
@@ -27,9 +28,9 @@ export default function SignUpForm(props: ISignUpForm) {
                 <Input
                     className="col-6"
                     id={firstName}
-                    label={strings.signUpPage.firstNameLabel}
+                    label={strings.registerPage.firstNameLabel}
                     type="text"
-                    placeholder={strings.signUpPage.firstNamePlaceholder}
+                    placeholder={strings.registerPage.firstNamePlaceholder}
                     value={props.user.firstName}
                     handleChange={props.handleValueChange}
                     validationErrors={props.validationErrors[firstName]}
@@ -38,9 +39,9 @@ export default function SignUpForm(props: ISignUpForm) {
                 <Input
                     className="col-6"
                     id={lastName}
-                    label={strings.signUpPage.lastNameLabel}
+                    label={strings.registerPage.lastNameLabel}
                     type="text"
-                    placeholder={strings.signUpPage.lastNamePlaceholder}
+                    placeholder={strings.registerPage.lastNamePlaceholder}
                     value={props.user.lastName}
                     handleChange={props.handleValueChange}
                     validationErrors={props.validationErrors[lastName]}
@@ -48,7 +49,21 @@ export default function SignUpForm(props: ISignUpForm) {
             </div>
 
             <div className="col-11">
-                <button disabled={props.actionInProgress} type="submit" className="btn btn-primary ml-1" onClick={props.handleSaveClick}>{strings.signUpPage.saveButton}</button>
+                <button
+                    type="button"
+                    className="btn btn-light"
+                    onClick={props.handleCancelClick}
+                >
+                    {strings.registerPage.cancelButton}
+                </button>
+                <button
+                    disabled={props.actionInProgress}
+                    type="submit"
+                    className="btn btn-primary ml-1"
+                    onClick={props.handleSaveClick}
+                >
+                    {strings.registerPage.saveButton}
+                </button>
             </div>
         </form>
     );

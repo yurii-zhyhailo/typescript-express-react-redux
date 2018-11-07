@@ -1,7 +1,7 @@
 
 import { IRegisterFailureAction,
          IRegisterInProgressAction,
-         IRegisterSuccessAction } from './registration/register.action'
+         IRegisterSuccessAction } from './register/register.action'
 import { ILoginFailureAction,
          ILoginInProgressAction,
          ILoginSuccessAction } from './authentication'

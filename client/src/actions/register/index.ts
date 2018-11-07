@@ -13,7 +13,6 @@ import IStoreState from '../../store/IStoreState';
 
 export function registerUser(
     user: IUser
-  // ): (dispatch: Dispatch<any>) => Promise<void> {
     ): (dispatch: Dispatch<any>) => Promise<void> {
     return async (dispatch: Dispatch<any>) => {
       // User registration in progress

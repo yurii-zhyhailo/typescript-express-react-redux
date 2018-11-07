@@ -170,10 +170,7 @@ class ServiceHandler implements IServiceHandler {
                 this.isSuccess(result);
             }
         }).catch((error: any) => {
-            
             console.log("Error! Response is invalid! Nothing happens!");
-            //console.log(error.response.data);
-            //this.isError(error);
         });
     }
 
@@ -200,10 +197,7 @@ class ServiceHandler implements IServiceHandler {
         let path = currentRoute.path == null ? this.routeName : currentRoute.path;
         path = path.toLowerCase();
 
-        if (this.runValidation(params)) {
-            return this.sendRequest(path, methodRoute, params, this.isCall);
-        }
-        // throw Validation Error
+        return this.sendRequest(path, methodRoute, params, this.isCall);
     }
 }
 
