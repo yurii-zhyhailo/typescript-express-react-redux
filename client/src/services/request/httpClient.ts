@@ -1,11 +1,17 @@
-import { RequestClient } from './request';
-import { FetchOptions } from './utils';
+import { RequestClient, FetchOptions } from './IRequestClient';
 
-export interface IHttpClient {
+
+export interface HttpClientImpl {
     fetch(url: string, options: FetchOptions): Promise<Response>;
 }
 
 export class HttpClient implements RequestClient {
+
+    private _impl: HttpClientImpl;
+
+    constructor() {
+    }
+
     public fetch(url: string, options: FetchOptions): Promise<Response> {
         const headers = new Headers();
             let requestOptions = {
